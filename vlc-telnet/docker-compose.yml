@@ -1,8 +1,8 @@
 version: '3'
 services:
   vlc:
-    image: ldotlopez/vlc
-    container_name: vlc
+    image: ldotlopez/vlc-telnet
+    container_name: vlc_telnet
     restart: unless-stopped
     volumes:
       - ./config:/app/.config
@@ -16,6 +16,6 @@ services:
       - ALSA_SCONTROL=Master
       - ALSA_DEVICE=default
       - ALSA_PORTS=PCM
-      - ALSA_SKIP_CONFIGURATION=1
+      - ALSA_SKIP_CONFIGURATION=0
       - VLC_PORT=4212
       - VLC_PASSWORD=password
