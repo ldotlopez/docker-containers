@@ -1,0 +1,20 @@
+version: '3'
+services:
+  vlc:
+    image: ldotlopez/vlc
+    container_name: vlc
+    restart: unless-stopped
+    volumes:
+      - ./config:/app/.config
+    devices:
+      - /dev/snd
+    ports:
+      - 4212:4212
+    environment:
+      - PUID=1000
+      - GUID=1000
+      - ALSA_SCONTROL=Master
+      - ALSA_DEVICE=default
+      - ALSA_PORTS=PCM
+      - VLC_PORT=4212
+      - VLC_PASSWORD=password
