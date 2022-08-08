@@ -16,5 +16,6 @@ services:
       - ALSA_SCONTROL=Master
       - ALSA_DEVICE=default
       - ALSA_PORTS=PCM
+      - ALSA_SKIP_CONFIGURATION=1
       - VLC_PORT=4212
       - VLC_PASSWORD=password

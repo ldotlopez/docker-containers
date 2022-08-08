@@ -13,6 +13,7 @@ PGID="${PGID:-1000}"
 ALSA_SCONTROL="${ALSA_SCONTROL:-Master}"
 ALSA_DEVICE="${ALSA_DEVICE:-default}"
 ALSA_PORTS="${ALSA_PORTS:-PCM}"
+ALSA_SKIP_CONFIGURATION="${ALSA_SKIP_CONFIGURATION:-}"
 
 VLC_PORT="${VLC_PORT:-4212}"
 VLC_PASSWORD="${VLC_PASSWORD:-password}"
@@ -39,17 +40,18 @@ export XDG_CONFIG_DIR="$APP_DIR/config"
 export XDG_DATA_DIR="$APP_DIR/data"
 mkdir -p "$XDG_CACHE_DIR" "$XDG_CONFIG_DIR" "$XDG_DATA_DIR"
 
-echo "*** Configuring ALSA ***"
-if [[ -n "$ALSA_DEVICE" && -n "$ALSA_SCONTROL" ]]; then
+if [[ -z "$ALSA_SKIP_CONFIGURATION" ]]; then
+    echo "*** Configuring ALSA ***"
+
     amixer -q -D "$ALSA_DEVICE" sset "$ALSA_SCONTROL" 100%
     amixer -q -D "$ALSA_DEVICE" sset "$ALSA_SCONTROL" unmute
-fi
 
-if [[ -n "$ALSA_DEVICE" && "$ALSA_PORTS" ]]; then
     for PORT in $(echo "$ALSA_PORTS" | tr , " "); do
         amixer -q -D "$ALSA_DEVICE" sset "$PORT" 100%
         amixer -q -D "$ALSA_DEVICE" sset "$PORT" unmute
     done
+else
+    echo "*** Skip ALSA configuration"
 fi
 
 echo "*** Starting VLC ***"
