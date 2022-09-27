@@ -1,0 +1,39 @@
+global:
+  instanceName: living
+  integrations:
+    - bluetoothClassic
+    - homeAssistant
+    # BTLE not supported on tachyon
+    # - bluetoothLowEnergy
+    # - xiaomiMi
+
+#cluster:
+#  port: 6425
+
+homeAssistant:
+  mqttUrl: 'mqtt://mqtt:1883'
+
+
+bluetoothClassic: {}
+
+#  addresses:
+#    - 7C:38:AD:5C:95:F1
+#
+#  entityOverrides:
+#    '7C:38:AD:5C:95:F1':
+#      id: samsung-s10e
+#      name: Samsung S10e
+#
+#
+
+bluetoothLowEnergy:
+  timeout: 15
+  allowlist:
+    - fda50693a4e24fb1afcfc6eb07647825-5-6
+    - f6166929076c  # MiBand 3
+
+  tagOverrides:
+    f6166929076c:
+      name: Mi Band 3
+    fda50693a4e24fb1afcfc6eb07647825-5-6:
+      name: Beacon Boo

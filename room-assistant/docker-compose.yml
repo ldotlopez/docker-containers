@@ -1,0 +1,12 @@
+version: '3'
+services:
+  room-assistant:
+    image: mkerix/room-assistant-i386
+    container_name: room-assistant
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ./config:/config/room_assistant
+      - /var/run/dbus:/var/run/dbus
+#   cap_add:
+#     - NET_ADMIN
