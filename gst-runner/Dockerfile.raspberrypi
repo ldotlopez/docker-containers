@@ -1,0 +1,30 @@
+FROM debian:bullseye-slim
+
+# Install gpnupg (to use apt-key)
+RUN \
+    apt-get update && \
+    apt-get install -y gnupg
+
+# Setup raspberrypi apt stuff
+COPY raspberrypi.list /etc/apt/sources.list.d/raspberrypi.list
+COPY raspberrypi.gpg.key /tmp
+RUN \
+    apt-key add /tmp/raspberrypi.gpg.key && \
+    rm -- /tmp/raspberrypi.gpg.key && \
+    apt-get update && \
+    apt-get dist-upgrade -y
+
+# Install system packages
+RUN \
+    apt-get dist-upgrade -y && \
+    apt-get \
+        install -y --no-install-recommends \
+        gstreamer1.0-rtsp \
+        gstreamer1.0-libav \
+        gstreamer1.0-plugins-ugly \
+        gstreamer1.0-plugins-bad \
+        gstreamer1.0-plugins-good \
+        gstreamer1.0-tools \
+        v4l-utils \
+        libcamera0 libcamera-tools \
+    && rm -r -- /var/cache/apt/
