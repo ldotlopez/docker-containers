@@ -1,0 +1,16 @@
+version: '3'
+services:
+  kineto:
+    build: ./build
+    container_name: kineto
+    environment:
+      - PUID=1000
+      - PGID=1000
+      # - TZ=Europe/Madrid
+      # - GEMINI_URL=gemini://example.com
+      # - CSS_FILEPATH=/data/local.css
+    volumes:
+      - ./data:/data
+    ports:
+      - 8200:80
+    restart: unless-stopped

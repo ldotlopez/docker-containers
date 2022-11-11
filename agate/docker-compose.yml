@@ -1,0 +1,18 @@
+version: '3'
+services:
+  agete:
+    build: ./build
+    container_name: server
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Madrid
+      - CONTENT=/content
+      - LANG=es-ES
+      # - HOSTNAME=example.com
+    # volumes:
+    #  - ./content:/content
+    ports:
+      - 1965:1965
+    restart: unless-stopped
+
