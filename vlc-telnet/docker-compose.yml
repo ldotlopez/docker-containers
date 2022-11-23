@@ -19,3 +19,7 @@ services:
       - ALSA_SKIP_CONFIGURATION=0
       - VLC_PORT=4212
       - VLC_PASSWORD=password
+      # On some very specific cases, like rpi+google sound hat, you must use this:
+      #
+      # - ALSA_DEVICE=default:CARD=sndrpigooglevoi
+      # - ALSA_SKIP_CONFIGURATION=1
