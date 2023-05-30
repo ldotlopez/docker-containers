@@ -1,14 +1,18 @@
 version: '3'
 services:
   vlc_telnet:
-    env_file: env
-    build: .
+    env_file: ./env
+    build: ./build
     image: ldotlopez/vlc-telnet
-    container_name: $NAME
+
+    container_name: "$NAME"
     restart: unless-stopped
-    volumes:
-      - ${CONFIG}:/app/.config
+
     devices:
       - /dev/snd
+
     ports:
-      - ${PORT}:${VLC_PORT}
+      - $PORT:4212
+
+    volumes:
+      - $CONFIG:/app/.config"

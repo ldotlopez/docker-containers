@@ -12,7 +12,7 @@ RUN apk add --no-cache \
 	tini \
 	sudo
 COPY --from=builder /usr/local/cargo/bin/agate /usr/bin/agate
-COPY --from=builder /usr/src/agate/content /content
+COPY --from=builder /usr/src/agate/content /usr/share/agate/content
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh

@@ -1,0 +1,16 @@
+# Container process variables
+PUID=1000
+GUID=1000
+
+# Alsa configuration
+ALSA_CONFIGURATION=1
+ALSA_SCONTROL=Master
+ALSA_DEVICE=default
+ALSA_PORTS=PCM
+# On some very specific cases, like rpi+google sound hat, you must use this:
+#
+# ALSA_DEVICE=default:CARD=sndrpigooglevoi
+# ALSA_SKIP_CONFIGURATION=1
+
+# VLC configuration
+VLC_PASSWORD=password

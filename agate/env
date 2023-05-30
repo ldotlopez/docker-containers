@@ -1,0 +1,12 @@
+# Process control
+PUID=1000
+PGID=1000
+
+# Timezone
+TZ=Europe/Madrid
+
+# Hostname
+AGATE_HOSTNAME=localhost
+
+# Server language
+AGATE_LANG=es-ES

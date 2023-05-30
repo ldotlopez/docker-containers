@@ -1,11 +1,15 @@
 version: '3'
 services:
   server:
+    env_file: ./env
     build: ./build
-    container_name: server
-    env_file: .env
-    volumes:
-      - $CONTENT:/content
+    image: ldotlopez/agate
+
+    container_name: $NAME
+    restart: unless-stopped
+
     ports:
       - $PORT:1965
-    restart: unless-stopped
+
+    volumes:
+      - $CONTENT:/content
