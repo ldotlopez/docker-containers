@@ -13,7 +13,7 @@ PGID="${PGID:-1000}"
 ALSA_SCONTROL="${ALSA_SCONTROL:-Master}"
 ALSA_DEVICE="${ALSA_DEVICE:-default}"
 ALSA_PORTS="${ALSA_PORTS:-PCM}"
-ALSA_SKIP_CONFIGURATION="${ALSA_SKIP_CONFIGURATION:-no}"
+ALSA_CONFIGURATION="${ALSA_CONFIGURATION:-yes}"
 
 VLC_HOST="${VLC_HOST:-127.0.0.1}"
 VLC_PORT="${VLC_PORT:-4212}"
@@ -21,7 +21,7 @@ VLC_PASSWORD="${VLC_PASSWORD:-password}"
 
 echo "*** Configuring container ***"
 
-if [ ! -e "$APP_DIR/.configured" ]; then
+if [[ ! -e "$APP_DIR/.configured" ]]; then
     echo "*** Configuring user/group: ${PROCESS_USER}:${PROCESS_GROUP} (${PUID}:${PGID}) ***"
     addgroup -g "$PGID" "$PROCESS_GROUP"
     adduser -u "$PUID" -h "$APP_DIR" -g '' -G "$PROCESS_GROUP" -D -H "$PROCESS_USER"
