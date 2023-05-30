@@ -1,25 +1,14 @@
 version: '3'
 services:
   vlc_telnet:
+    env_file: env
+    build: .
     image: ldotlopez/vlc-telnet
-    container_name: vlc_telnet
+    container_name: $NAME
     restart: unless-stopped
     volumes:
-      - ./config:/app/.config
+      - ${CONFIG}:/app/.config
     devices:
       - /dev/snd
     ports:
-      - 4212:4212
-    environment:
-      - PUID=1000
-      - GUID=1000
-      - ALSA_SCONTROL=Master
-      - ALSA_DEVICE=default
-      - ALSA_PORTS=PCM
-      - ALSA_SKIP_CONFIGURATION=0
-      - VLC_PORT=4212
-      - VLC_PASSWORD=password
-      # On some very specific cases, like rpi+google sound hat, you must use this:
-      #
-      # - ALSA_DEVICE=default:CARD=sndrpigooglevoi
-      # - ALSA_SKIP_CONFIGURATION=1
+      - ${PORT}:${VLC_PORT}

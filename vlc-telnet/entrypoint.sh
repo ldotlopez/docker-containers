@@ -15,6 +15,7 @@ ALSA_DEVICE="${ALSA_DEVICE:-default}"
 ALSA_PORTS="${ALSA_PORTS:-PCM}"
 ALSA_SKIP_CONFIGURATION="${ALSA_SKIP_CONFIGURATION:-no}"
 
+VLC_HOST="${VLC_HOST:-127.0.0.1}"
 VLC_PORT="${VLC_PORT:-4212}"
 VLC_PASSWORD="${VLC_PASSWORD:-password}"
 
@@ -41,21 +42,27 @@ export XDG_DATA_DIR="$APP_DIR/data"
 mkdir -p "$XDG_CACHE_DIR" "$XDG_CONFIG_DIR" "$XDG_DATA_DIR"
 
 if [[ 
-    "$ALSA_SKIP_CONFIGURATION" = "y" ||
-    "$ALSA_SKIP_CONFIGURATION" = "yes" ||
-    "$ALSA_SKIP_CONFIGURATION" = "1" ]] \
-    ; then
-    echo "*** Skip ALSA configuration"
-else
+    "$ALSA_CONFIGURATION" = "true" ||
+    "$ALSA_CONFIGURATION" = "y" ||
+    "$ALSA_CONFIGURATION" = "yes" ||
+    "$ALSA_CONFIGURATION" = "1" ]]; then
+
     echo "*** Configuring ALSA ***"
 
-    amixer -q -D "$ALSA_DEVICE" sset "$ALSA_SCONTROL" 100%
-    amixer -q -D "$ALSA_DEVICE" sset "$ALSA_SCONTROL" unmute
-
-    for PORT in $(echo "$ALSA_PORTS" | tr , " "); do
-        amixer -q -D "$ALSA_DEVICE" sset "$PORT" 100%
-        # amixer -q -D "$ALSA_DEVICE" sset "$PORT" unmute
+    for PORT in "$ALSA_SCONTROL" $(echo "$ALSA_PORTS" | tr , " "); do
+        [[ -n "$PORT" ]] || continue
+        amixer -q -D "$ALSA_DEVICE" sset "$PORT" 100% || {
+            echo "amixer sset $PORT 100% failed, ignoring"
+            true
+        }
+        amixer -q -D "$ALSA_DEVICE" sset "$PORT" unmute || {
+            echo "amixer sset $PORT 100% unmute, ignoring"
+            true
+        }
     done
+
+else
+    echo "*** Skip ALSA configuration"
 fi
 
 echo "*** Starting VLC ***"
@@ -65,4 +72,4 @@ exec sudo --set-home \
     vlc -vvvv \
     --no-dbus \
     -A alsa --alsa-audio-device "$ALSA_DEVICE" \
-    -I telnet --telnet-host="127.0.0.1" --telnet-port "$VLC_PORT" --telnet-password "$VLC_PASSWORD"
+    -I telnet --telnet-host="${VLC_HOST}" --telnet-port="$VLC_PORT" --telnet-password="$VLC_PASSWORD"
