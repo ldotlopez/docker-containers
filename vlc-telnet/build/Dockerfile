@@ -1,4 +1,4 @@
-FROM alpine
+FROM alpine:latest
 MAINTAINER luis@cuarentaydos.com
 
 EXPOSE 4212/tcp

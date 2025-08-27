@@ -1,18 +1,37 @@
 version: '3'
 services:
-  vlc_telnet:
-    env_file: ./env
+  vlc-telnet:
     build: ./build
     image: ldotlopez/vlc-telnet
-
     container_name: "$NAME"
     restart: unless-stopped
-
     devices:
       - /dev/snd
-
-    ports:
-      - $PORT:4212
-
     volumes:
       - $CONFIG:/app/.config"
+    ports:
+      - $PORT:4212
+    # env_file: ./env
+    # environment:
+    #   - PUID="${PUID:-1000}"
+    #   - PGID="${PGID:-1000}"
+    #   - ALSA_SCONTROL="${ALSA_SCONTROL:-Master}"
+    #   - ALSA_DEVICE="${ALSA_DEVICE:-default}"
+    #   - ALSA_PORT="${ALSA_PORT:-PCM}"
+    #   - ALSA_PORTS="${ALSA_PORTS:-$ALSA_PORT}"
+    #   - ALSA_CONFIGURATION="${ALSA_CONFIGURATION:-yes}"
+    #   - VLC_USER="abc"
+    #   - VLC_GROUP="abc"
+    #   - APP_DIR="/app"
+    #   - VLC_HOST="${VLC_HOST:-127.0.0.1}"
+    #   - VLC_PORT="${VLC_PORT:-4212}"
+    #  - VLC_PASSWORD="${VLC_PASSWORD:-password}
+    healthcheck:
+      test: nc -z localhost 4212
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
