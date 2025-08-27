@@ -39,32 +39,26 @@ sudo chown -R "$PUID:$PGID" "$AGATE_CONTENT" "$AGATE_CERTIFICATES"
 if [[ ! -f "$AGATE_CONTENT/index.gmi" ]]; then
 	cp -r /usr/share/agate/content/* "$AGATE_CONTENT/"
 	chown -R "$PUID:$PGID" "$AGATE_CONTENT"
-
-	# echo "[*] Creating index.gmi"
-	# cat >"$CONTENT/index.gmi" <<-EOF
-	# 	# Hello
-	#
-	# 	This is "$HOSTNAME"
-	# EOF
 fi
 
 #
 # Run agate
 #
 
-echo "[*] Running agate process: '$USERNAME:$GROUPNAME' ($PUID:$PGID)"
-echo "[*] Running agate addr: '0.0.0.0:1965' and '[::]:1965'"
-echo "[*] Running agate content: '$AGATE_CONTENT'"
-echo "[*] Running agate certificates: '$AGATE_CERTIFICATES'"
-echo "[*] Running agate hostname: '$AGATE_HOSTNAME'"
-echo "[*] Running agate language: '$AGATE_LANG'"
+echo "[*] Running as: '$USERNAME:$GROUPNAME' ($PUID:$PGID)"
+echo "[*]         addr: '0.0.0.0:1965' and '[::]:1965'"
+echo "[*]         content: '$AGATE_CONTENT'"
+echo "[*]         certificates: '$AGATE_CERTIFICATES'"
+echo "[*]         hostname: '$AGATE_HOSTNAME'"
+echo "[*]         language: '$AGATE_LANG'"
+
 exec sudo \
 	--user="$USERNAME" \
-	--group="$(getent group "$PUID" | cut -d : -f 1)" \
-	/usr/bin/agate \
-	--addr '0.0.0.0:1965' \
-	--addr '[::]:1965' \
-	--content "$AGATE_CONTENT" \
-	--certs "$AGATE_CERTIFICATES" \
-	--hostname "$AGATE_HOSTNAME" \
-	--lang "$AGATE_LANG"
+	--group="$GROUPNAME" \
+	"/usr/bin/agate" \
+	"--addr" '0.0.0.0:1965' \
+	"--addr" '[::]:1965' \
+	"--content" "$AGATE_CONTENT" \
+	"--certs" "$AGATE_CERTIFICATES" \
+	"--hostname" "$AGATE_HOSTNAME" \
+	"--lang" "$AGATE_LANG"
