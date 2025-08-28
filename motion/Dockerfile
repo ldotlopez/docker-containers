@@ -1,4 +1,5 @@
 FROM ubuntu:20.10
+LABEL org.opencontainers.image.authors="luis@cuarentaydos.com"
 
 VOLUME /data
 VOLUME /conf
