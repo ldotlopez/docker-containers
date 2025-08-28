@@ -1,5 +1,5 @@
 FROM alpine:latest
-MAINTAINER luis@cuarentaydos.com
+LABEL org.opencontainers.image.authors="luis@cuarentaydos.com"
 
 EXPOSE 4212/tcp
 

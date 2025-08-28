@@ -1,4 +1,5 @@
 FROM rust:alpine as builder
+LABEL org.opencontainers.image.authors="luis@cuarentaydos.com"
 
 RUN apk add --no-cache \
 	cargo \

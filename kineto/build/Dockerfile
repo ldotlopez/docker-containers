@@ -1,4 +1,5 @@
 FROM alpine as builder
+LABEL org.opencontainers.image.authors="luis@cuarentaydos.com"
 
 RUN apk add --no-cache go git
 RUN git clone https://git.sr.ht/~sircmpwn/kineto /usr/src/kineto
